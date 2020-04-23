@@ -7,8 +7,9 @@ print("Getting data\n")
 dict = np.genfromtxt('dict2.txt',dtype='str')
 
 ##Constraint
-unAllowedLetters = "cdlnu"
-mask = "*a*ier"
+unAllowedLetters = "nc"
+mask = "*as*e"
+mask2="*a*ier"
 
 def validMask(word):
     if len(word)!=len(mask):
@@ -17,7 +18,9 @@ def validMask(word):
     for i in range(len(word)):
         letterMask=mask[i]
         letterWord=word[i]
-        if letterMask != "*" and letterMask!=letterWord:
+        if letterMask==letterWord:
+            1
+        else:
             return False
 
     return True
