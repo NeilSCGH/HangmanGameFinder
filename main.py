@@ -4,11 +4,11 @@ import numpy as np
 
 ##Reading the file
 print("Getting data\n")
-dict = np.genfromtxt('dict.txt',dtype='str')
+dict = np.genfromtxt('dict2.txt',dtype='str')
 
 ##Constraint
-unAllowedLetters=""
-mask="ordinateur"
+unAllowedLetters = "cdlnu"
+mask = "*a*ier"
 
 def validMask(word):
     if len(word)!=len(mask):
@@ -41,4 +41,5 @@ for word in dict:
 
 
 print(possibilities)
-print("\nfrom {} to {}".format(len(dict),len(possibilities)))
+print("\nmodel:",mask)
+print("from {} to {}".format(len(dict),len(possibilities)))
