@@ -7,9 +7,8 @@ print("Getting data\n")
 dict = np.genfromtxt('dict2.txt',dtype='str')
 
 ##Constraint
-unAllowedLetters = "nc"
-mask = "*as*e"
-mask2="*a*ier"
+unAllowedLetters = "asi"
+mask = "****re**er"
 
 def validMask(word):
     if len(word)!=len(mask):
@@ -18,10 +17,12 @@ def validMask(word):
     for i in range(len(word)):
         letterMask=mask[i]
         letterWord=word[i]
-        if letterMask==letterWord:
-            1
+        if letterMask == "*":
+            if letterWord in mask:
+                return False
         else:
-            return False
+            if letterMask!=letterWord:
+                return False
 
     return True
 
@@ -45,4 +46,17 @@ for word in dict:
 
 print(possibilities)
 print("\nmodel:",mask)
-print("from {} to {}".format(len(dict),len(possibilities)))
+print("from {} to {}\n".format(len(dict),len(possibilities)))
+
+
+proba={}
+for word in possibilities:
+    for letter in word:
+        if letter not in mask:
+            try:
+                proba[letter]=proba[letter]+1
+            except:
+                proba[letter]=1
+
+maxLetter=max(proba, key=proba.get)
+print("Ask for",maxLetter)
