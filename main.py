@@ -4,11 +4,11 @@ import numpy as np
 
 ##Reading the file
 print("Getting data\n")
-dict = np.genfromtxt('dict2.txt',dtype='str')
+dict = np.genfromtxt('dict4.txt',dtype='str')
 
 ##Constraint
-unAllowedLetters = "asi"
-mask = "****re**er"
+unAllowedLetters = ""
+mask = "*****e*e*****e**"
 
 def validMask(word):
     if len(word)!=len(mask):
@@ -45,8 +45,10 @@ for word in dict:
 
 
 print(possibilities)
-print("\nmodel:",mask)
-print("from {} to {}\n".format(len(dict),len(possibilities)))
+print("\nWords in dict:",len(dict))
+print("None of:",unAllowedLetters)
+print("Model:",mask)
+print("Words left:",len(possibilities))
 
 
 proba={}
@@ -59,4 +61,4 @@ for word in possibilities:
                 proba[letter]=1
 
 maxLetter=max(proba, key=proba.get)
-print("Ask for",maxLetter)
+print("\nAsk for",maxLetter)
