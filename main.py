@@ -1,6 +1,4 @@
-import pandas as pd
 import numpy as np
-
 
 ##Reading the file
 print("Getting data\n")
