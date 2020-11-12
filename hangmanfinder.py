@@ -85,18 +85,20 @@ class hangmanFinder():
         return validWords
 
     def printNextLetter(self):
-        proba={}
+        apparitions={}
         for word in self.validWords:
             for letter in "abcdefghijklmnopqrstuvwxyz":
                 if letter in word and letter not in self.mask:
                     try:
-                        proba[letter]=proba[letter]+1
+                        apparitions[letter]=apparitions[letter]+1
                     except:#new letter
-                        proba[letter]=1
+                        apparitions[letter]=1
 
         result=""
-        maxVal = max(proba.values())
-        topLetters = [letter for letter, val in proba.items() if val == maxVal]
+        maxVal = max(apparitions.values())
+        if maxVal == len(self.validWords): maxVal -= 1
+
+        topLetters = [letter for letter, val in apparitions.items() if val == maxVal]
 
         print("\nYou can ask for: {}".format(topLetters[0]), end="")
         for letter in topLetters[1:]:
