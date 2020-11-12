@@ -83,17 +83,30 @@ class hangmanFinder():
 
         return validWords
 
-    def computeNextLetter(self):
+    def printNextLetter(self):
         proba={}
         for word in self.validWords:
             for letter in word:
                 if letter not in self.mask:
                     try:
                         proba[letter]=proba[letter]+1
-                    except:
+                    except:#new letter
                         proba[letter]=1
 
-        return max(proba, key=proba.get)
+        result=""
+        maxVal = max(proba.values())
+        topLetters = [letter for letter, val in proba.items() if val == maxVal]
+
+        print("\nYou can ask for: {}".format(topLetters[0]), end="")
+        for letter in topLetters[1:]:
+            print(", {}".format(letter), end="")
+        print("\n")
+
+    def printwords(self):
+        print("{}".format(self.validWords[0]), end="")
+        for word in self.validWords[1:]:
+            print(", {}".format(word), end="")
+        print()
 
     def run(self):
         ##Reading the file
@@ -108,19 +121,17 @@ class hangmanFinder():
 
         if len(self.validWords)==0:
             print("\nNO CORRESPONDING WORDS FOUND\n")
+
         elif len(self.validWords)==1:
             print("\nUNIQUE WORDS FOUND:")
             print(self.validWords[0])
             print()
+
         else:
-            print("\n{} corresponding words found:".format(len(self.validWords)))
-            print(self.validWords)
+            print("\n{} corresponding words found:  ".format(len(self.validWords)))
+            self.printwords()
             
-            nextLetter = self.computeNextLetter()
-            print("\nNext letter to ask for is {}\n".format(nextLetter))
-
-
-        
+            self.printNextLetter()
 
 
 if __name__ == '__main__':
