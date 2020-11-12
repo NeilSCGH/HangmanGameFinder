@@ -87,13 +87,13 @@ class hangmanFinder():
     def printNextLetter(self):
         proba={}
         for word in self.validWords:
-            for letter in word:
-                if letter not in self.mask:
+            for letter in "abcdefghijklmnopqrstuvwxyz":
+                if letter in word and letter not in self.mask:
                     try:
                         proba[letter]=proba[letter]+1
                     except:#new letter
                         proba[letter]=1
-
+                        
         result=""
         maxVal = max(proba.values())
         topLetters = [letter for letter, val in proba.items() if val == maxVal]
