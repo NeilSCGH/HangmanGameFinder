@@ -9,6 +9,7 @@ Usage: python hangmanfinder.py -d file -m mask [-f letters]
 Options:
    -d file     txt file to use as dictionary.
    -m mask     The mask to use, where * is a unknown letter.
+               You can use "*", or "?" or "." for an unknown letter.
    -f letters  Results with one of these letters will be excluded.
    -h|help|?   (Optional) Print this help.
 ```

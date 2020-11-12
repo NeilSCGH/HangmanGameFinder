@@ -47,6 +47,7 @@ class hangmanFinder():
         print("Options:")
         print("   -d file     txt file to use as dictionary.")
         print("   -m mask     The mask to use, where * is a unknown letter.")
+        print("               You can use \"*\", or \"?\" or \".\" for an unknown letter.")
         print("   -f letters  Results with one of these letters will be excluded.")
         print("   -h|help|?   (Optional) Print this help.")
 
@@ -55,7 +56,7 @@ class hangmanFinder():
             return False
 
         for letterMask, letterWord in zip(self.mask, word):
-            if letterMask == "?":
+            if letterMask in ".*?":
                 if letterWord in self.mask: #this letter was already found and is somewhere else in the word
                     return False
             else:
