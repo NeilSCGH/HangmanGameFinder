@@ -19,7 +19,8 @@ python hangmanfinder.py -d french_complete.txt -m "s??en?e" -f "ardpu"
 ```
  Will return
 ```
-['science', 'silence']
-...
-Ask for c
+2 corresponding words found:
+science, silence
+
+You can ask for: c
 ```
