@@ -16,7 +16,7 @@ Options:
 
 ## Example
 ```
-python hangmanfinder.py -d french_complete.txt -m "s??en?e" -f "ardpu"
+python hangmanfinder.py -d french_complete.txt -m "s..en.e" -f "ardpu"
 ```
  Will return
 ```
