@@ -11,7 +11,7 @@ class hangmanFinder():
         if self.utils.argExist("-h") or self.utils.argExist("-help") or self.utils.argExist("-?"):
             self.help()
             exit(0)
-            
+
         if self.utils.argHasValue("-d"):
             self.dictFile = self.utils.argValue("-d")
             #todo : check if file exists, add .txt if not provided
@@ -69,27 +69,32 @@ class hangmanFinder():
 
         return True
 
+    def computeValidWords(self):
+        validWords=[]
+        for word in self.dict:
+            if self.validWord(word):
+                validWords.append(word)
+
+        return validWords
 
     def run(self):
         ##Reading the file
-        print("Getting data\n")
+        print("Reading dict...", end="")
         self.dict = np.genfromtxt(self.dictFile, dtype='str')
+        print("Done")
+        print("{} words found in dictionary".format(len(self.dict)))
 
-        possibilities=[]
-        for word in self.dict:
-            if self.validWord(word):
-                possibilities.append(word)
+        print("\nApplying mask \"{}\" ...".format(self.mask),end="")
+        self.validWords = self.computeValidWords()
+        print("Done")
 
-
-        print(possibilities)
-        print("\nWords in dict:",len(self.dict))
-        print("None of:",self.forbiddenLetter)
-        print("Model:",self.mask)
-        print("Words left:",len(possibilities))
+        print("{} corresponding words found:\n".format(len(self.validWords)))
+        #print("Excluding letters :",self.forbiddenLetter)
+        print(self.validWords)
 
 
         proba={}
-        for word in possibilities:
+        for word in self.validWords:
             for letter in word:
                 if letter not in self.mask:
                     try:
@@ -98,7 +103,7 @@ class hangmanFinder():
                         proba[letter]=1
 
         maxLetter=max(proba, key=proba.get)
-        print("\nAsk for",maxLetter)
+        print("\nNext letter to ask for is {}\n".format(maxLetter))
 
 
 if __name__ == '__main__':
