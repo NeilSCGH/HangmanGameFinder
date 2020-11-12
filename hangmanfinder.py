@@ -93,7 +93,7 @@ class hangmanFinder():
                         proba[letter]=proba[letter]+1
                     except:#new letter
                         proba[letter]=1
-                        
+
         result=""
         maxVal = max(proba.values())
         topLetters = [letter for letter, val in proba.items() if val == maxVal]
@@ -111,14 +111,13 @@ class hangmanFinder():
 
     def run(self):
         ##Reading the file
-        print("Reading dict...", end="")
+        print("Reading dict... ", end="")
         self.dict = np.genfromtxt(self.dictFile, dtype='str')
         print("Done")
         print("{} words found in dictionary".format(len(self.dict)))
 
-        print("\nApplying mask \"{}\" ...".format(self.mask),end="")
+        print("\nApplying mask \"{}\" ...".format(self.mask))
         self.validWords = self.computeValidWords()
-        print("Done")
 
         if len(self.validWords)==0:
             print("\nNO CORRESPONDING WORDS FOUND\n")
