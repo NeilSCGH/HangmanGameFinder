@@ -96,7 +96,13 @@ class hangmanFinder():
 
         result=""
         maxVal = max(apparitions.values())
-        if maxVal == len(self.validWords): maxVal -= 1
+        if maxVal == len(self.validWords): #drop the maxVal
+            tmp={}
+            for key, value in apparitions.items():
+                if value!=maxVal: 
+                    tmp[key]=value
+            apparitions = tmp.copy()
+            maxVal = max(apparitions.values())
 
         topLetters = [letter for letter, val in apparitions.items() if val == maxVal]
 
