@@ -1,6 +1,6 @@
 from lib.utils import *
 import numpy as np
-import sys
+import sys, os.path
 
 class hangmanFinder():
     def __init__(self, args):
@@ -14,6 +14,10 @@ class hangmanFinder():
 
         if self.utils.argHasValue("-d"):
             self.dictFile = self.utils.argValue("-d")
+
+            if not os.path.isfile(self.dictFile):
+                print("File not found: {}\n".format(self.dictFile))
+                exit(0)
             #todo : check if file exists, add .txt if not provided
         else:
             print("-d is missing")
@@ -22,6 +26,10 @@ class hangmanFinder():
 
         if self.utils.argHasValue("-m"):
             self.mask = self.utils.argValue("-m")
+            for letter in self.mask:
+                if letter not in "abcdefghijklmnopqrstuvwxyz?":
+                    print("Invalid mask\n")
+                    exit(0)
         else:
             print("-m is missing")
             self.help()
@@ -98,13 +106,21 @@ class hangmanFinder():
         self.validWords = self.computeValidWords()
         print("Done")
 
-        print("{} corresponding words found:\n".format(len(self.validWords)))
-        #print("Excluding letters :",self.forbiddenLetter)
-        print(self.validWords)
+        if len(self.validWords)==0:
+            print("\nNO CORRESPONDING WORDS FOUND\n")
+        elif len(self.validWords)==1:
+            print("\nUNIQUE WORDS FOUND:")
+            print(self.validWords[0])
+            print()
+        else:
+            print("\n{} corresponding words found:".format(len(self.validWords)))
+            print(self.validWords)
+            
+            nextLetter = self.computeNextLetter()
+            print("\nNext letter to ask for is {}\n".format(nextLetter))
 
 
-        nextLetter = self.computeNextLetter()
-        print("\nNext letter to ask for is {}\n".format(nextLetter))
+        
 
 
 if __name__ == '__main__':
