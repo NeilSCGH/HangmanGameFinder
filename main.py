@@ -8,6 +8,10 @@ class hangmanFinder():
         self.setup(args)#process the arguments
 
     def setup(self, args):
+        if self.utils.argExist("-h") or self.utils.argExist("-help") or self.utils.argExist("-?"):
+            self.help()
+            exit(0)
+            
         if self.utils.argHasValue("-d"):
             self.dictFile = self.utils.argValue("-d")
             #todo : check if file exists, add .txt if not provided
@@ -28,7 +32,15 @@ class hangmanFinder():
             self.forbiddenLetter = self.utils.argValue("-f")
 
     def help(self):
-        print("help : todo")
+        print()
+        print("Usage: python main.py -d file -m mask [-f letters]")
+        print("                      [[-h] | [-help] | [-?]]")
+        print()
+        print("Options:")
+        print("   -d file     txt file to use as dictionary.")
+        print("   -m mask     The mask to use, where * is a unknown letter.")
+        print("   -f letters  Results with one of these letters will be excluded.")
+        print("   -h|help|?   (Optional) Print this help.")
 
     def validMask(self, word):
         if len(word)!=len(self.mask):
