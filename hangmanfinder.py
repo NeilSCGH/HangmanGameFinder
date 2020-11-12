@@ -101,7 +101,7 @@ class hangmanFinder():
         print("\nYou can ask for: {}".format(topLetters[0]), end="")
         for letter in topLetters[1:]:
             print(", {}".format(letter), end="")
-        print("\n")
+        print("")
 
     def printwords(self):
         print("{}".format(self.validWords[0]), end="")
@@ -131,8 +131,9 @@ class hangmanFinder():
             print("\n{} corresponding words found:  ".format(len(self.validWords)))
             self.printwords()
             print("{} corresponding words found:  ".format(len(self.validWords)))
-            
+
             self.printNextLetter()
+            print("{} tries left.\n".format(11-len(self.forbiddenLetter)))
 
 
 if __name__ == '__main__':
