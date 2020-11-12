@@ -130,6 +130,7 @@ class hangmanFinder():
         else:
             print("\n{} corresponding words found:  ".format(len(self.validWords)))
             self.printwords()
+            print("{} corresponding words found:  ".format(len(self.validWords)))
             
             self.printNextLetter()
 
