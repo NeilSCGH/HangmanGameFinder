@@ -1,62 +1,94 @@
+from lib.utils import *
 import numpy as np
+import sys
 
-##Reading the file
-print("Getting data\n")
-dict = np.genfromtxt('dict4.txt',dtype='str')
+class hangmanFinder():
+    def __init__(self, args):
+        self.utils = utils(args)
+        self.setup(args)#process the arguments
 
-##Constraint
-unAllowedLetters = ""
-mask = "*****e*e*****e**"
-
-def validMask(word):
-    if len(word)!=len(mask):
-        return False
-
-    for i in range(len(word)):
-        letterMask=mask[i]
-        letterWord=word[i]
-        if letterMask == "*":
-            if letterWord in mask:
-                return False
+    def setup(self, args):
+        if self.utils.argHasValue("-d"):
+            self.dictFile = self.utils.argValue("-d")
+            #todo : check if file exists, add .txt if not provided
         else:
-            if letterMask!=letterWord:
-                return False
+            print("-d is missing")
+            self.help()
+            exit(0)
 
-    return True
+        if self.utils.argHasValue("-m"):
+            self.mask = self.utils.argValue("-m")
+        else:
+            print("-m is missing")
+            self.help()
+            exit(0)
 
-def validWord(word):
-    word=word.lower()
-    if not validMask(word):
-        return False
+        self.forbiddenLetter=""
+        if self.utils.argHasValue("-f"):
+            self.forbiddenLetter = self.utils.argValue("-f")
 
-    for letter in word:
-        if letter in unAllowedLetters:
+    def help(self):
+        print("help : todo")
+
+    def validMask(self, word):
+        if len(word)!=len(self.mask):
             return False
 
-    return True
+        for i in range(len(word)):
+            letterMask=self.mask[i]
+            letterWord=word[i]
+            if letterMask == "*":
+                if letterWord in self.mask:
+                    return False
+            else:
+                if letterMask!=letterWord:
+                    return False
+
+        return True
+
+    def validWord(self, word):
+        word=word.lower()
+        if not self.validMask(word):
+            return False
+
+        for letter in word:
+            if letter in self.forbiddenLetter:
+                return False
+
+        return True
 
 
-possibilities=[]
-for word in dict:
-    if validWord(word):
-        possibilities.append(word)
+    def run(self):
+        ##Reading the file
+        print("Getting data\n")
+        self.dict = np.genfromtxt(self.dictFile, dtype='str')
+
+        possibilities=[]
+        for word in self.dict:
+            if self.validWord(word):
+                possibilities.append(word)
 
 
-print(possibilities)
-print("\nWords in dict:",len(dict))
-print("None of:",unAllowedLetters)
-print("Model:",mask)
-print("Words left:",len(possibilities))
+        print(possibilities)
+        print("\nWords in dict:",len(self.dict))
+        print("None of:",self.forbiddenLetter)
+        print("Model:",self.mask)
+        print("Words left:",len(possibilities))
 
 
-proba={}
-for word in possibilities:
-    for letter in word:
-        if letter not in mask:
-            try:
-                proba[letter]=proba[letter]+1
-            except:
-                proba[letter]=1
+        proba={}
+        for word in possibilities:
+            for letter in word:
+                if letter not in self.mask:
+                    try:
+                        proba[letter]=proba[letter]+1
+                    except:
+                        proba[letter]=1
 
-maxLetter=max(proba, key=proba.get)
-print("\nAsk for",maxLetter)
+        maxLetter=max(proba, key=proba.get)
+        print("\nAsk for",maxLetter)
+
+
+if __name__ == '__main__':
+    prog = hangmanFinder(sys.argv)
+    prog.run()
