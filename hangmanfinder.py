@@ -43,27 +43,25 @@ class hangmanFinder():
         print("   -h|help|?   (Optional) Print this help.")
 
     def validMask(self, word):
-        if len(word)!=len(self.mask):
+        if len(word) != len(self.mask):
             return False
 
-        for i in range(len(word)):
-            letterMask=self.mask[i]
-            letterWord=word[i]
-            if letterMask == "*":
-                if letterWord in self.mask:
+        for letterMask, letterWord in zip(self.mask, word):
+            if letterMask == "?":
+                if letterWord in self.mask: #this letter was already found and is somewhere else in the word
                     return False
             else:
-                if letterMask!=letterWord:
+                if letterMask != letterWord:
                     return False
 
         return True
 
     def validWord(self, word):
         word=word.lower()
-        if not self.validMask(word):
+        if not self.validMask(word): #doesn't match to the mask
             return False
 
-        for letter in word:
+        for letter in word: #contains a forbidden letter
             if letter in self.forbiddenLetter:
                 return False
 
@@ -76,6 +74,18 @@ class hangmanFinder():
                 validWords.append(word)
 
         return validWords
+
+    def computeNextLetter(self):
+        proba={}
+        for word in self.validWords:
+            for letter in word:
+                if letter not in self.mask:
+                    try:
+                        proba[letter]=proba[letter]+1
+                    except:
+                        proba[letter]=1
+
+        return max(proba, key=proba.get)
 
     def run(self):
         ##Reading the file
@@ -93,17 +103,8 @@ class hangmanFinder():
         print(self.validWords)
 
 
-        proba={}
-        for word in self.validWords:
-            for letter in word:
-                if letter not in self.mask:
-                    try:
-                        proba[letter]=proba[letter]+1
-                    except:
-                        proba[letter]=1
-
-        maxLetter=max(proba, key=proba.get)
-        print("\nNext letter to ask for is {}\n".format(maxLetter))
+        nextLetter = self.computeNextLetter()
+        print("\nNext letter to ask for is {}\n".format(nextLetter))
 
 
 if __name__ == '__main__':
