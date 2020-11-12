@@ -27,7 +27,7 @@ class hangmanFinder():
         if self.utils.argHasValue("-m"):
             self.mask = self.utils.argValue("-m")
             for letter in self.mask:
-                if letter not in "abcdefghijklmnopqrstuvwxyz?":
+                if letter not in "abcdefghijklmnopqrstuvwxyz.*?":
                     print("Invalid mask\n")
                     exit(0)
         else:
