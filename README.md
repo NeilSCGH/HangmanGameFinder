@@ -3,8 +3,8 @@
 This program is made to cheat at the hangman game. 
 It will lists all possible words, and give you the next letter to ask for.
 ```
-Usage: python main.py -d file -m mask [-f letters]
-                      [[-h] | [-help] | [-?]]
+Usage: python hangmanfinder.py -d file -m mask [-f letters]
+                               [[-h] | [-help] | [-?]]
 
 Options:
    -d file     txt file to use as dictionary.

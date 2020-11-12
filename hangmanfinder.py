@@ -41,8 +41,8 @@ class hangmanFinder():
 
     def help(self):
         print()
-        print("Usage: python main.py -d file -m mask [-f letters]")
-        print("                      [[-h] | [-help] | [-?]]")
+        print("Usage: python hangmanfinder.py -d file -m mask [-f letters]")
+        print("                               [[-h] | [-help] | [-?]]")
         print()
         print("Options:")
         print("   -d file     txt file to use as dictionary.")
